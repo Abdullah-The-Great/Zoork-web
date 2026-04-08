@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: halloween --default;
+}
+
+body {
+  font-family: "Share Tech Mono", monospace;
+  background: #0d0d0d;
+}
+
+.title-font {
+  font-family: "UnifrakturMaguntia", cursive;
+}
+
+#output {
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b00 #1a1a1a;
+}
+#output::-webkit-scrollbar {
+  width: 6px;
+}
+#output::-webkit-scrollbar-thumb {
+  background: #ff6b00;
+  border-radius: 3px;
+}
+
+.msg-system {
+  color: #ff6b00;
+}
+.msg-player {
+  color: #f8f4e8;
+}
+.msg-error {
+  color: #ff4444;
+}
+.msg-success {
+  color: #a3e635;
+}
+.msg-info {
+  color: #94a3b8;
+}
+
+.exit-btn:hover {
+  background: #ff6b00 !important;
+  color: #000 !important;
+}
