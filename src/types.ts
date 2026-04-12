@@ -24,3 +24,11 @@ export interface LogMessage {
   html: string;
   type: MessageType;
 }
+
+export interface SaveSlot {
+  slot: number;
+  gameState: GameState;
+  savedAt: string;
+  currentRoom: string;
+  inventoryCount: number;
+}
