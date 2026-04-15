@@ -5,6 +5,7 @@ import {
   initGameState,
   processCommand,
   describeRoom,
+  makeIntroMessage,
 } from "./engine/GameEngine";
 import { autoSave } from "./engine/SaveManager";
 import type { GameState, LogMessage } from "./types";
@@ -19,12 +20,10 @@ export default function App() {
   function startNewGame() {
     const state = initGameState();
     const intro: LogMessage[] = [
-      {
-        id: -2,
-        html: "🎃 <strong>Welcome to ZOOrk: Halloween at Hilltop Manor!</strong>",
-        type: "system",
-      },
-      { id: -1, html: "<br/>", type: "info" },
+      makeIntroMessage(
+        "🎃 <strong>Welcome to ZOOrk: Halloween at Hilltop Manor!</strong>",
+      ),
+      makeIntroMessage("<br/>"),
       ...describeRoom(state),
     ];
     setGameState(state);
@@ -35,12 +34,8 @@ export default function App() {
 
   function resumeGame(savedState: GameState) {
     const resumeMsgs: LogMessage[] = [
-      {
-        id: -2,
-        html: "🎃 <strong>Welcome back to Hilltop Manor!</strong>",
-        type: "system",
-      },
-      { id: -1, html: "<br/>", type: "info" },
+      makeIntroMessage("🎃 <strong>Welcome back to Hilltop Manor!</strong>"),
+      makeIntroMessage("<br/>"),
       ...describeRoom(savedState),
     ];
     setGameState(savedState);

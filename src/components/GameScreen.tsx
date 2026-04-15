@@ -34,16 +34,32 @@ export function GameScreen({
 
   return (
     <div className="w-full max-w-3xl flex flex-col gap-3">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <h1 className="title-font text-3xl text-orange-500">ZOOrk</h1>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {savedSlot && (
             <span className="text-green-400 text-xs animate-pulse">
               ✓ Saved to slot {savedSlot}
             </span>
           )}
+          {state.won && (
+            <span className="text-yellow-400 text-xs animate-bounce">
+              🎃 WINNER!
+            </span>
+          )}
           <div className="badge badge-warning badge-outline">{room.name}</div>
+          <button
+            onClick={() => onCommand("objectives")}
+            className="btn btn-xs btn-outline btn-warning"
+          >
+            📋 Objectives
+          </button>
+          <button
+            onClick={() => onCommand("hint")}
+            className="btn btn-xs btn-outline btn-warning"
+          >
+            💡 Hint
+          </button>
           <button
             onClick={() => setShowSavePanel((v) => !v)}
             className="btn btn-xs btn-outline btn-warning"
@@ -59,7 +75,6 @@ export function GameScreen({
         </div>
       </div>
 
-      {/* Save panel */}
       {showSavePanel && (
         <div className="card bg-base-200 border border-orange-900 rounded-xl px-4 py-3">
           <p className="text-orange-500 text-xs uppercase tracking-wider mb-2">
@@ -75,15 +90,9 @@ export function GameScreen({
                   className="btn btn-sm btn-outline btn-warning flex-1 flex-col h-auto py-2"
                 >
                   <span>Slot {slot}</span>
-                  {existing ? (
-                    <span className="text-xs text-slate-500 font-normal">
-                      {existing.currentRoom}
-                    </span>
-                  ) : (
-                    <span className="text-xs text-slate-600 font-normal">
-                      empty
-                    </span>
-                  )}
+                  <span className="text-xs text-slate-500 font-normal">
+                    {existing ? existing.currentRoom : "empty"}
+                  </span>
                 </button>
               );
             })}

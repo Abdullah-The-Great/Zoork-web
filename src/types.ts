@@ -8,13 +8,16 @@ export interface Room {
   desc: string;
   items: string[];
   passages: Record<string, Passage>;
+  dark?: boolean;
 }
 
 export interface GameState {
   currentRoom: string;
   inventory: string[];
   roomItems: Record<string, string[]>;
+  flags: Record<string, boolean>;
   isOver: boolean;
+  won: boolean;
 }
 
 export type MessageType = "system" | "player" | "error" | "success" | "info";
