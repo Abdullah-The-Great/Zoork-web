@@ -13,7 +13,9 @@ export function cmdUse(item: string, state: GameState, msgs: LogMessage[]) {
   const next = {
     ...state,
     flags: { ...state.flags },
-    roomItems: { ...state.roomItems },
+    roomItems: Object.fromEntries(
+      Object.entries(state.roomItems).map(([k, v]) => [k, [...v]]),
+    ),
     inventory: [...state.inventory],
   };
 
@@ -120,10 +122,14 @@ export function cmdUseOn(
   const next = {
     ...state,
     flags: { ...state.flags },
-    roomItems: { ...state.roomItems },
     inventory: [...state.inventory],
+    roomItems: Object.fromEntries(
+      Object.entries(state.roomItems).map(([k, v]) => [k, [...v]]),
+    ),
   };
-  const inRoom = (t: string) => next.roomItems[next.currentRoom].includes(t);
+
+  const currentItems = state.roomItems[state.currentRoom] ?? [];
+  const inRoom = (t: string) => currentItems.includes(t);
   const addItem = (i: string) => {
     next.roomItems[next.currentRoom] = [...next.roomItems[next.currentRoom], i];
   };
