@@ -169,35 +169,76 @@ export function TitleScreen({ onNewGame, onResume, onLoad }: Props) {
       {/* Tutorial */}
       {showTutorial && (
         <div className="card bg-base-200 w-full mt-2 p-4 text-sm text-slate-300 leading-7">
-          <p className="text-orange-400 font-bold mb-2">🧙 How to Play</p>
-          <p>
-            <span className="text-orange-300">go &lt;direction&gt;</span> — Move
-            (north, south, east, west, up, down)
+          <p className="text-orange-400 font-bold mb-3">🧙 How to Play</p>
+
+          <p className="text-orange-300 text-xs uppercase tracking-wider mb-1">
+            Movement
           </p>
           <p>
-            <span className="text-orange-300">look</span> — Examine your
-            surroundings
+            Use the <span className="text-orange-300">Go</span> buttons to move
+            between rooms. Locked doors show 🔒 — find the right key first.
+          </p>
+
+          <p className="text-orange-300 text-xs uppercase tracking-wider mt-3 mb-1">
+            Items
           </p>
           <p>
-            <span className="text-orange-300">look &lt;item&gt;</span> — Inspect
-            an item
+            Click <span className="text-orange-300">+ item</span> buttons to
+            pick things up. Click{" "}
+            <span className="text-orange-300">Take All</span> to grab everything
+            in the room.
           </p>
           <p>
-            <span className="text-orange-300">take &lt;item&gt;</span> — Pick up
-            an item
+            Open your <span className="text-orange-300">🎒 Inventory</span> to
+            see what you're carrying. Click an item name to inspect it, click{" "}
+            <span className="text-orange-300">✕</span> to drop it.
+          </p>
+
+          <p className="text-orange-300 text-xs uppercase tracking-wider mt-3 mb-1">
+            Using Items
           </p>
           <p>
-            <span className="text-orange-300">drop &lt;item&gt;</span> — Drop an
-            item
+            Select an item from the <span className="text-orange-300">Use</span>{" "}
+            dropdown. Optionally pick a target with{" "}
+            <span className="text-orange-300">on</span> then hit{" "}
+            <span className="text-orange-300">Use</span>. This is how you solve
+            puzzles.
+          </p>
+
+          <p className="text-orange-300 text-xs uppercase tracking-wider mt-3 mb-1">
+            Navigation
           </p>
           <p>
-            <span className="text-orange-300">inventory</span> — Check your bag
+            <span className="text-orange-300">🗺 Map</span> — shows which rooms
+            you've explored and where you are.
           </p>
           <p>
-            <span className="text-orange-300">quit</span> — Leave the manor
+            <span className="text-orange-300">📋 Objectives</span> — tracks your
+            progress through the story.
           </p>
-          <p className="mt-2 text-slate-500">
-            🚪 Some doors are locked. Find the right key to pass through.
+          <p>
+            <span className="text-orange-300">💡 Hint</span> — stuck? Get a
+            nudge in the right direction.
+          </p>
+          <p>
+            <span className="text-orange-300">💾 Save</span> — save to one of 3
+            slots anytime. Your progress also auto-saves on every room change.
+          </p>
+
+          <p className="text-orange-300 text-xs uppercase tracking-wider mt-3 mb-1">
+            The Goal
+          </p>
+          <p>
+            You are trapped in Hilltop Manor by the Ghost Witch. Explore all 10
+            rooms, solve the puzzles, collect the four ritual items and break
+            the spell seal in the Study to claim the{" "}
+            <span className="text-orange-400">Magic Pumpkin Head</span> and
+            escape!
+          </p>
+
+          <p className="mt-3 text-slate-600 text-xs">
+            🎩 Psst... there may be a secret agent access button somewhere on
+            the game screen.
           </p>
         </div>
       )}

@@ -3,10 +3,10 @@ import type { Room } from "../types";
 export const ROOMS: Record<string, Room> = {
   foyer: {
     name: "Foyer",
-    desc: "A creepy entrance hall with cobwebs and flickering candlelight. A note is pinned to the wall. The air smells of burnt wax.",
+    desc: "A creepy entrance hall with cobwebs and flickering candlelight. A note is pinned to the wall. The air smells of burnt wax. A door to the east leads deeper into the manor.",
     items: ["candle", "note", "witch-hat", "pumpkin"],
     passages: {
-      north: { to: "hallway", key: "orange-key" },
+      east: { to: "kitchen" },
     },
   },
   hallway: {
@@ -14,18 +14,18 @@ export const ROOMS: Record<string, Room> = {
     desc: "A long hallway lit by flickering sconces. A large portrait of a stern witch hangs on the wall. The eyes seem to follow you.",
     items: ["candelabra", "portrait"],
     passages: {
-      south: { to: "foyer", key: "orange-key" },
-      east: { to: "kitchen" },
+      south: { to: "kitchen" },
       west: { to: "library", key: "black-key" },
       north: { to: "bedroom", key: "pumpkin-key" },
     },
   },
   kitchen: {
     name: "Kitchen",
-    desc: "A dusty kitchen with rusty pots and strange smells. A large cauldron sits in the center, bubbling faintly.",
+    desc: "A dusty kitchen with rusty pots and strange smells. A large cauldron sits in the center, bubbling faintly. A hallway leads north.",
     items: ["cauldron", "bottle-of-bat-wings", "cursed-spoon"],
     passages: {
-      west: { to: "hallway" },
+      west: { to: "foyer" },
+      north: { to: "hallway" },
       down: { to: "basement" },
     },
   },
@@ -40,7 +40,7 @@ export const ROOMS: Record<string, Room> = {
   },
   garden: {
     name: "Garden",
-    desc: "An overgrown graveyard with crooked tombstones. A thick broom leans against the gate. Moonlight barely pierces the clouds.",
+    desc: "An overgrown graveyard with crooked tombstones. Moonlight barely pierces the clouds.",
     items: ["grave-marker", "black-cat-statue", "spider"],
     passages: {
       south: { to: "library" },
@@ -76,7 +76,7 @@ export const ROOMS: Record<string, Room> = {
   },
   bathroom: {
     name: "Bathroom",
-    desc: "A cracked mirror and a rusty clawfoot tub. A strange potion bottle sits on the edge of the sink. The window is boarded shut.",
+    desc: "A cracked mirror and a rusty clawfoot tub. A strange potion bottle sits on the edge of the sink.",
     items: ["mirror-shard", "potion-bottle", "moldy-towel"],
     passages: {
       west: { to: "bedroom" },

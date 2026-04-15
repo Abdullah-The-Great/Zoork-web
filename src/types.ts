@@ -35,3 +35,12 @@ export interface SaveSlot {
   currentRoom: string;
   inventoryCount: number;
 }
+export interface GameState {
+  currentRoom: string;
+  inventory: string[];
+  roomItems: Record<string, string[]>;
+  flags: Record<string, boolean>;
+  visitedRooms: string[];
+  isOver: boolean;
+  won: boolean;
+}
