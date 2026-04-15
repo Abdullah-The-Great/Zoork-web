@@ -13,6 +13,14 @@ const DIR_ALIASES: Record<string, string> = {
   d: "down",
 };
 
+const FIXED_ITEMS = [
+  "cauldron",
+  "loose-stone",
+  "grave-marker",
+  "portrait",
+  "dusty-trunk",
+];
+
 export function cmdGo(args: string[], state: GameState, msgs: LogMessage[]) {
   if (!args.length) {
     msgs.push(makeMsg("Go where?", "error"));
@@ -118,6 +126,12 @@ export function cmdTake(args: string[], state: GameState, msgs: LogMessage[]) {
   }
 
   const itemName = args.join("-");
+
+  if (FIXED_ITEMS.includes(itemName)) {
+    msgs.push(makeMsg(`You can't pick up the ${itemSpan(itemName)}.`, "error"));
+    return { nextState: state, messages: msgs };
+  }
+
   const ri = [...state.roomItems[state.currentRoom]];
   const idx = ri.indexOf(itemName);
 
@@ -149,16 +163,19 @@ export function cmdTakeAll(state: GameState, msgs: LogMessage[]) {
     return { nextState: state, messages: msgs };
   }
 
-  const ri = [...state.roomItems[state.currentRoom]];
+  const allRoomItems = state.roomItems[state.currentRoom];
+  const ri = allRoomItems.filter((i) => !FIXED_ITEMS.includes(i));
+  const fixed = allRoomItems.filter((i) => FIXED_ITEMS.includes(i));
+
   if (!ri.length) {
-    msgs.push(makeMsg("There is nothing here to take.", "info"));
+    msgs.push(makeMsg("There is nothing here you can pick up.", "info"));
     return { nextState: state, messages: msgs };
   }
 
   const next: GameState = {
     ...state,
     inventory: [...state.inventory, ...ri],
-    roomItems: { ...state.roomItems, [state.currentRoom]: [] },
+    roomItems: { ...state.roomItems, [state.currentRoom]: fixed },
     flags: {
       ...state.flags,
       ...(ri.includes("candle") || ri.includes("ghost-lantern")
@@ -167,8 +184,13 @@ export function cmdTakeAll(state: GameState, msgs: LogMessage[]) {
     },
   };
 
-  msgs.push(makeMsg("You pick up everything:", "success"));
+  msgs.push(makeMsg("You pick up everything you can:", "success"));
   ri.forEach((item) => msgs.push(makeMsg(`  + ${itemSpan(item)}`, "success")));
+  if (fixed.length) {
+    msgs.push(
+      makeMsg(`Left behind (fixed): ${fixed.map(itemSpan).join(", ")}`, "info"),
+    );
+  }
   return { nextState: next, messages: msgs };
 }
 
@@ -267,7 +289,9 @@ export function cmdQuit(state: GameState, msgs: LogMessage[]) {
 }
 
 export function cmdCheat(state: GameState, msgs: LogMessage[]) {
-  const allItems = Object.values(state.roomItems).flat();
+  const allItems = Object.values(state.roomItems)
+    .flat()
+    .filter((i) => !FIXED_ITEMS.includes(i));
   const allKeys = [
     "orange-key",
     "black-key",
@@ -279,7 +303,10 @@ export function cmdCheat(state: GameState, msgs: LogMessage[]) {
     ...state,
     inventory: [...new Set([...state.inventory, ...allItems, ...allKeys])],
     roomItems: Object.fromEntries(
-      Object.keys(state.roomItems).map((r) => [r, []]),
+      Object.entries(state.roomItems).map(([r, items]) => [
+        r,
+        items.filter((i) => FIXED_ITEMS.includes(i)),
+      ]),
     ),
     flags: {
       ...state.flags,
